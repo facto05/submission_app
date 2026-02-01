@@ -13,6 +13,19 @@ export interface AuthCredentials {
   password: string;
 }
 
+export interface AddressEntity {
+  address?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+}
+
+export interface CompanyEntity {
+  name?: string;
+  department?: string;
+  title?: string;
+}
+
 export interface UserAuthEntity {
   id: string;
   email: string;
@@ -21,7 +34,10 @@ export interface UserAuthEntity {
   firstName?: string;
   lastName?: string;
   gender?: string;
+  phone?: string;
   image?: string;
+  address?: AddressEntity;
+  company?: CompanyEntity;
   token: AuthTokenEntity;
 }
 
@@ -54,7 +70,10 @@ export class UserAuth implements UserAuthEntity {
   firstName?: string;
   lastName?: string;
   gender?: string;
+  phone?: string;
   image?: string;
+  address?: AddressEntity;
+  company?: CompanyEntity;
   token: AuthTokenEntity;
 
   constructor(auth: UserAuthEntity) {
@@ -65,7 +84,10 @@ export class UserAuth implements UserAuthEntity {
     this.firstName = auth.firstName;
     this.lastName = auth.lastName;
     this.gender = auth.gender;
+    this.phone = auth.phone;
     this.image = auth.image;
+    this.address = auth.address;
+    this.company = auth.company;
     this.token = auth.token;
   }
 

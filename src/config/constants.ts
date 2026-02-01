@@ -25,6 +25,11 @@ export const API_ENDPOINTS = {
     DETAIL: (id: string) => `/users/${id}`,
     SEARCH: '/users/search',
   },
+  PRODUCTS: {
+    LIST: '/products',
+    DETAIL: (id: string) => `/products/${id}`,
+    SEARCH: '/products/search',
+  },
 } as const;
 
 // ============================================================================

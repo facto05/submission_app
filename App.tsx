@@ -3,30 +3,27 @@
  * Clean architecture with proper dependency injection
  */
 
-import React, { useState } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from 'react';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider, useTheme } from './src/presentation/context/ThemeContext';
-import { HomeScreen } from './src/presentation/screens/HomeScreen';
-import { LoginScreen } from './src/presentation/screens/LoginScreen';
-import { serviceLocator } from './src/config/service_locator';
+import { RootNavigator } from './src/presentation/navigation';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
   return (
-    <SafeAreaProvider>
-      <ThemeProvider>
-        <AppCore />
-      </ThemeProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <ThemeProvider>
+          <AppCore />
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 
 function AppCore(): React.JSX.Element {
   const { isDarkMode } = useTheme();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <>
@@ -35,41 +32,9 @@ function AppCore(): React.JSX.Element {
         backgroundColor="transparent"
         translucent
       />
-      <AppContent
-        isLoggedIn={isLoggedIn}
-        onLoginSuccess={() => setIsLoggedIn(true)}
-        onLogout={() => setIsLoggedIn(false)}
-      />
+      <RootNavigator />
     </>
   );
 }
-
-function AppContent({
-  isLoggedIn,
-  onLoginSuccess,
-  onLogout,
-}: {
-  isLoggedIn: boolean;
-  onLoginSuccess: () => void;
-  onLogout: () => void;
-}): React.JSX.Element {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
-      {!isLoggedIn ? (
-        <LoginScreen onLoginSuccess={onLoginSuccess} />
-      ) : (
-        <HomeScreen />
-      )}
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;

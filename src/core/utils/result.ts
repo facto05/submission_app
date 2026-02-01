@@ -4,6 +4,9 @@
 
 import { Failure, Result, Success } from '../types';
 
+export { Success, Failure };
+export type { Result };
+
 export const isSuccess = <T>(result: Result<T>): result is Success<T> => {
   return result instanceof Success;
 };
