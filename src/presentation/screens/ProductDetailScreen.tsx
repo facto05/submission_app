@@ -11,12 +11,11 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  SafeAreaView,
-  ActivityIndicator,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors } from '../hooks/useThemeColors';
 import { ProductEntity } from '../../domain/entities/product';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type RootStackParamList = {
   Home: undefined;

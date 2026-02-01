@@ -11,7 +11,7 @@ interface UserCardProps {
   onPress?: (user: User) => void;
 }
 
-export const UserCard: React.FC<UserCardProps> = ({ user, onPress }) => {
+export const UserCard: React.FC<UserCardProps> = ({ user }) => {
   return (
     <View style={styles.container}>
       {user.avatar && (
