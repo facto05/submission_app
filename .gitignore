@@ -73,3 +73,52 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# ============================================================================
+# Documentation Files - Not tracked
+# ============================================================================
+*.md
+!README.md
+!CONTRIBUTING.md
+
+# ============================================================================
+# Test Files - Not tracked
+# ============================================================================
+test-*.js
+test-*.ts
+test-*.tsx
+*-test.js
+TEST_SUMMARY.txt
+find-credentials.js
+verify-login-integration.js
+__tests__/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+/coverage
+.nyc_output/
+jest-results.json
+
+# ============================================================================
+# Development & Debug Files
+# ============================================================================
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ============================================================================
+# Build Artifacts
+# ============================================================================
+dist/
+build/
+.next/
+out/
