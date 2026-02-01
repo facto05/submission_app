@@ -1,37 +1,67 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
+ * Root App Component
+ * Clean architecture with proper dependency injection
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import React, { useState } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { ThemeProvider, useTheme } from './src/presentation/context/ThemeContext';
+import { HomeScreen } from './src/presentation/screens/HomeScreen';
+import { LoginScreen } from './src/presentation/screens/LoginScreen';
+import { serviceLocator } from './src/config/service_locator';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
+function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <ThemeProvider>
+        <AppCore />
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }
 
-function AppContent() {
+function AppCore(): React.JSX.Element {
+  const { isDarkMode } = useTheme();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  return (
+    <>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor="transparent"
+        translucent
+      />
+      <AppContent
+        isLoggedIn={isLoggedIn}
+        onLoginSuccess={() => setIsLoggedIn(true)}
+        onLogout={() => setIsLoggedIn(false)}
+      />
+    </>
+  );
+}
+
+function AppContent({
+  isLoggedIn,
+  onLoginSuccess,
+  onLogout,
+}: {
+  isLoggedIn: boolean;
+  onLoginSuccess: () => void;
+  onLogout: () => void;
+}): React.JSX.Element {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+    <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+      {!isLoggedIn ? (
+        <LoginScreen onLoginSuccess={onLoginSuccess} />
+      ) : (
+        <HomeScreen />
+      )}
     </View>
   );
 }
